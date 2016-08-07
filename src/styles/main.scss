@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'icon';
+  src: url('../fons/iconfont.eot');
+  src: url('../fons/iconfont.eot?#iefix') format('embedded-opentype'),
+  url('../fons/iconfont.woff') format('woff'),
+  url('../fons/iconfont.ttf') format('truetype'),
+  url('../fons/iconfont.svg#iconfont') format('svg');
+}
+
+
 html,body{
   width:100%;
   height: 100%;
@@ -11,7 +21,8 @@ html,body{
  .stage{
    position:relative;
    width:100%;
-   height:680px;
+   height:100%;
+
  }
 /* stage end*/
 
@@ -22,19 +33,28 @@ html,body{
    height:100%;
    background-color: #ddd;
    overflow: hidden;
+   perspective: 1800px;
 
    @at-root {
      .img-figure{
        position: absolute;
-       width:320px;
+       width:310px;
        height: 390px;
        margin:0;
-       padding: 40px 40px 70px;
+       padding: 30px 30px 70px;
        //overflow: hidden;
        background-color: #fff;
 
        box-sizing: border-box;
+       transform-style: preserve-3d;
+       transition:transform .6s ease-in-out, left .6s ease-in-out,top .6s ease-in-out;
 
+       transform-origin: 0 50% 0;
+
+       &.is-inverse{
+         transform: translate(310px) rotateY(180deg);
+
+       }
        img{
          width: 100%;
          height:100%;
@@ -44,11 +64,29 @@ html,body{
        text-align: center;
 
        .img-title{
-         margin: 20px 0;
+         margin: 20px 0 0 0;
          color: #a7a0a2;
          font-size: 16px;
        }
+
+       .img-back{
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color: #fff;
+         padding: 30px;
+         box-sizing: border-box;
+         text-align: left;
+         line-height: 1.6;
+         color: #a7a0a2;
+         transform: rotateY(180deg) translateZ(1px);//translateZ用于修复苹果浏览器的BUG
+         backface-visibility: hidden;
+
+       }
      }
+
    }
  }
 /* image end*/
@@ -61,5 +99,41 @@ html,body{
   z-index: 101;
   width: 100%;
   text-align:center;
+
+  @at-root {
+    .contorller-init{
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin: 0 5px;
+      text-align: center;
+      background-color: #aaa;
+      border-radius: 50%;
+      cursor: pointer;
+      transform: scale(.5);
+      vertical-align: middle;
+      transition: transform .6s ease-in-out, background-color .3s;
+
+      &.is-center{
+        background-color: #888;
+        transform: scale(1);
+
+        &::after{
+          font-family:"icon" !important;
+          font-size:16px;font-style:normal;
+          -webkit-font-smoothing: antialiased;
+          -webkit-text-stroke-width: 0.2px;
+          -moz-osx-font-smoothing: grayscale;
+          color: #fff;
+          content: '\e645';
+          line-height: 30px;
+        }
+      }
+      &.is-inverse{
+        transform: rotateY(180deg);
+        background-color: #555;
+      }
+    }
+  }
 }
 /* contorller end*/
